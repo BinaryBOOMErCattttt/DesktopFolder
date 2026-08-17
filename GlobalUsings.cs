@@ -1,0 +1,10 @@
+global using Button = System.Windows.Controls.Button;
+global using Application = System.Windows.Application;
+global using IDataObject = System.Runtime.InteropServices.ComTypes.IDataObject;
+global using DragEventArgs = System.Windows.DragEventArgs;
+global using DataFormats = System.Windows.DataFormats;
+global using DragDropEffects = System.Windows.DragDropEffects;
+global using Point = System.Windows.Point;
+global using Image = System.Windows.Controls.Image;
+global using MouseEventArgs = System.Windows.Input.MouseEventArgs;
+global using KeyEventArgs = System.Windows.Input.KeyEventArgs;
