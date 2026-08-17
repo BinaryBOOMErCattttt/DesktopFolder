@@ -6,6 +6,14 @@ All notable changes to this project are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v1.2.0] - 2026-08-18
+
+### Added / 新增
+
+- **中英双语界面**:齿轮菜单新增"语言"子菜单(中文 / English),一键切换全部界面文案并持久化
+- **Bilingual UI**: new "Language" submenu in the gear menu (中文 / English), switches all UI strings instantly and persists
+- 语言自动初始化:跟随 config.json 的 `language` 字段(默认中文)/ language auto-loads from the `language` field in config.json (defaults to Chinese)
+
 ## [v1.1.0] - 2026-08-17
 
 ### Added / 新增
