@@ -84,9 +84,10 @@ public partial class MainWindow : Window
         InitializeComponent();
 
         ShowInTaskbar = false;
-        Title = "Desktop Folder";
+        Title = L10n.Get("桌面文件夹", "Desktop Folder");
         _folderPath = _settings.FolderPath;
         ItemsList.ItemsSource = _items;
+        ApplyL10n();
 
         var def = GetDefaultSize(_settings.GridMode);
         Width = Math.Clamp(_settings.Width ?? def.W, MinAWidth, SystemParameters.WorkArea.Width / 2);
@@ -108,11 +109,44 @@ public partial class MainWindow : Window
 
         ShellIcon.SetupBackdrop(this);
         UpdateFolderTitle();
-        try { File.WriteAllText(Path.Combine(Path.GetTempPath(), "hfolder_diag.txt"), $"Tier={RenderCapability.Tier}|Mode={RenderOptions.ProcessRenderMode}|Dpi={VisualTreeHelper.GetDpi(this).DpiScaleX}"); } catch { }
         _ = RefreshAsync();
     }
 
     private static (double W, double H) GetDefaultSize(int mode) => mode == 2 ? (140, 168) : (196, 224);
+
+    private void ApplyL10n()
+    {
+        Title = L10n.Get("桌面文件夹", "Desktop Folder");
+        HeaderGear.ToolTip = L10n.Get("菜单", "Menu");
+        MenuOpen.Header = L10n.Get("打开文件夹", "Open Folder");
+        MenuChange.Header = L10n.Get("更换文件夹…", "Change Folder…");
+        MenuAutoStart.Header = L10n.Get("开机自启动", "Auto-start");
+        MenuNew.Header = L10n.Get("新建小组件", "New Widget");
+        MenuRefresh.Header = L10n.Get("刷新", "Refresh");
+        MenuMode.Header = L10n.Get("显示模式", "Display Mode");
+        MenuLang.Header = L10n.Get("语言", "Language");
+        MenuHideExt.Header = L10n.Get("隐藏文件后缀名", "Hide Extensions");
+        MenuDelete.Header = L10n.Get("删除小组件", "Delete Widget");
+        MenuExit.Header = L10n.Get("退出", "Exit");
+        EmptyHint.Text = L10n.Get("文件夹为空", "Folder is empty");
+        MenuLangZh.IsChecked = !L10n.IsEn;
+        MenuLangEn.IsChecked = L10n.IsEn;
+        UpdateItemCount();
+    }
+
+    private void MenuLang_Click(object sender, RoutedEventArgs e)
+    {
+        L10n.Language = sender == MenuLangEn ? "en" : "zh";
+        Config.Language = L10n.Language;
+        Config.Save();
+        foreach (Window w in Application.Current.Windows)
+            if (w is MainWindow mw) mw.ApplyL10n();
+    }
+
+    private void UpdateItemCount()
+    {
+        ItemCountText.Text = L10n.Get($"{_items.Count} 项", $"{_items.Count} items");
+    }
 
     private (double W, double H) ComputeExpandedSize()
     {
@@ -152,7 +186,7 @@ public partial class MainWindow : Window
         }
         catch { }
         if (string.IsNullOrEmpty(name)) name = _folderPath;
-        if (string.IsNullOrEmpty(name)) name = "文件夹";
+        if (string.IsNullOrEmpty(name)) name = L10n.Get("文件夹", "Folder");
         FolderNameLabel.Text = name;
         ExpandedName.Text = name;
     }
@@ -215,7 +249,7 @@ public partial class MainWindow : Window
             _items.Add(item);
         }
         ItemsList.Height = rows * cellH;
-        ItemCountText.Text = $"{_items.Count} 项";
+        UpdateItemCount();
         EmptyHint.Visibility = _items.Count == 0 ? Visibility.Visible : Visibility.Collapsed;
         UpdateFolderTitle();
         UpdateMiniGrid();
@@ -968,6 +1002,8 @@ public partial class MainWindow : Window
         MenuHideExt.IsChecked = _settings.HideExtensions;
         Mode2.IsChecked = _settings.GridMode == 2;
         Mode3.IsChecked = _settings.GridMode == 3;
+        MenuLangZh.IsChecked = !L10n.IsEn;
+        MenuLangEn.IsChecked = L10n.IsEn;
         _suppressCollapse = true;
     }
 
@@ -986,7 +1022,7 @@ public partial class MainWindow : Window
         {
             using var dlg = new System.Windows.Forms.FolderBrowserDialog
             {
-                Description = "选择要在桌面文件夹中展示的目录",
+                Description = L10n.Get("选择要在桌面文件夹中展示的目录", "Choose a folder to show in the widget"),
                 SelectedPath = _folderPath,
                 ShowNewFolderButton = false
             };
@@ -1067,11 +1103,15 @@ public partial class MainWindow : Window
     {
         if (Config.Widgets.Count <= 1)
         {
-            System.Windows.MessageBox.Show(this, "至少需要保留一个小组件。", "删除小组件",
+            System.Windows.MessageBox.Show(this,
+                L10n.Get("至少需要保留一个小组件。", "At least one widget must remain."),
+                L10n.Get("删除小组件", "Delete Widget"),
                 MessageBoxButton.OK, MessageBoxImage.Information);
             return;
         }
-        var r = System.Windows.MessageBox.Show(this, "确定删除此小组件?\n它不会影响源文件夹。", "删除小组件",
+        var r = System.Windows.MessageBox.Show(this,
+            L10n.Get("确定删除此小组件?\n它不会影响源文件夹。", "Delete this widget?\nThe source folder will not be affected."),
+            L10n.Get("删除小组件", "Delete Widget"),
             MessageBoxButton.YesNo, MessageBoxImage.Question);
         if (r != MessageBoxResult.Yes) return;
         Config.Widgets.Remove(_settings);

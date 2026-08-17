@@ -151,22 +151,26 @@
                             <TextBlock Text="&#9881;" FontSize="14" Foreground="#B32A2A2A" TextAlignment="Center"/>
                             <Button.ContextMenu>
                                 <ContextMenu Opened="Menu_Opened" Closed="Menu_Closed">
-                                    <MenuItem Header="打开文件夹" Click="MenuOpen_Click"/>
-                                    <MenuItem Header="更换文件夹…" Click="MenuChange_Click"/>
+                                    <MenuItem x:Name="MenuOpen" Header="打开文件夹" Click="MenuOpen_Click"/>
+                                    <MenuItem x:Name="MenuChange" Header="更换文件夹…" Click="MenuChange_Click"/>
                                     <MenuItem x:Name="MenuAutoStart" Header="开机自启动" IsCheckable="True"
                                               Click="MenuAutoStart_Click"/>
-                                    <MenuItem Header="新建小组件" Click="MenuNewWidget_Click"/>
-                                    <MenuItem Header="刷新" Click="MenuRefresh_Click"/>
+                                    <MenuItem x:Name="MenuNew" Header="新建小组件" Click="MenuNewWidget_Click"/>
+                                    <MenuItem x:Name="MenuRefresh" Header="刷新" Click="MenuRefresh_Click"/>
                                     <Separator/>
-                                    <MenuItem Header="显示模式">
+                                    <MenuItem x:Name="MenuMode" Header="显示模式">
                                         <MenuItem x:Name="Mode2" Header="2 × 2" IsCheckable="True" Click="Mode2_Click"/>
                                         <MenuItem x:Name="Mode3" Header="3 × 3" IsCheckable="True" Click="Mode3_Click"/>
+                                    </MenuItem>
+                                    <MenuItem x:Name="MenuLang" Header="语言">
+                                        <MenuItem x:Name="MenuLangZh" Header="中文" IsCheckable="True" Click="MenuLang_Click"/>
+                                        <MenuItem x:Name="MenuLangEn" Header="English" IsCheckable="True" Click="MenuLang_Click"/>
                                     </MenuItem>
                                     <MenuItem x:Name="MenuHideExt" Header="隐藏文件后缀名" IsCheckable="True"
                                               IsChecked="True" Click="MenuHideExt_Click"/>
                                     <Separator/>
-                                    <MenuItem Header="删除小组件" Click="MenuDeleteWidget_Click"/>
-                                    <MenuItem Header="退出" Click="MenuExit_Click"/>
+                                    <MenuItem x:Name="MenuDelete" Header="删除小组件" Click="MenuDeleteWidget_Click"/>
+                                    <MenuItem x:Name="MenuExit" Header="退出" Click="MenuExit_Click"/>
                                 </ContextMenu>
                             </Button.ContextMenu>
                         </Button>

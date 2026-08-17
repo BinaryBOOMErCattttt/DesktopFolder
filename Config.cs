@@ -22,6 +22,8 @@ internal static class Config
 
     public static List<WidgetSettings> Widgets = new();
 
+    public static string Language = "zh";
+
     public static WidgetSettings Primary
     {
         get
@@ -44,6 +46,8 @@ internal static class Config
             {
                 using var doc = JsonDocument.Parse(File.ReadAllText(FilePath));
                 var r = doc.RootElement;
+                if (r.TryGetProperty("language", out var lg) && lg.ValueKind == JsonValueKind.String)
+                    Language = lg.GetString() == "en" ? "en" : "zh";
                 if (r.TryGetProperty("widgets", out var ws) && ws.ValueKind == JsonValueKind.Array)
                 {
                     foreach (var w in ws.EnumerateArray())
@@ -91,6 +95,7 @@ internal static class Config
             var json = JsonSerializer.Serialize(
                 new
                 {
+                    language = Language,
                     widgets = Widgets.Select(w => new
                     {
                         folderPath = w.FolderPath,
