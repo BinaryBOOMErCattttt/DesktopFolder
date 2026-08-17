@@ -1,7 +1,7 @@
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Windows.Media.Imaging;
 
-namespace HyperOSFolder;
+namespace DesktopFolder;
 
 public sealed class FolderItem : INotifyPropertyChanged
 {

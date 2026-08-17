@@ -1,6 +1,6 @@
 ﻿using System.Windows;
 
-namespace HyperOSFolder;
+namespace DesktopFolder;
 
 public partial class App : Application
 {

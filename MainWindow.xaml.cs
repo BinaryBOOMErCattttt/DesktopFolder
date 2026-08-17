@@ -14,7 +14,7 @@ using Microsoft.Win32;
 using MediaColor = System.Windows.Media.Color;
 using Cursors = System.Windows.Input.Cursors;
 
-namespace HyperOSFolder;
+namespace DesktopFolder;
 
 public partial class MainWindow : Window
 {
@@ -84,7 +84,7 @@ public partial class MainWindow : Window
         InitializeComponent();
 
         ShowInTaskbar = false;
-        Title = "HyperOS Folder";
+        Title = "Desktop Folder";
         _folderPath = _settings.FolderPath;
         ItemsList.ItemsSource = _items;
 
@@ -1011,9 +1011,9 @@ public partial class MainWindow : Window
             using var key = Registry.CurrentUser.CreateSubKey(RunKey);
             if (key == null) return;
             if (MenuAutoStart.IsChecked)
-                key.SetValue("HyperOSFolder", $"\"{Environment.ProcessPath}\"");
+                key.SetValue("DesktopFolder", $"\"{Environment.ProcessPath}\"");
             else
-                key.DeleteValue("HyperOSFolder", false);
+                key.DeleteValue("DesktopFolder", false);
         }
         catch { }
     }
@@ -1084,7 +1084,7 @@ public partial class MainWindow : Window
         try
         {
             using var key = Registry.CurrentUser.OpenSubKey(RunKey);
-            return key?.GetValue("HyperOSFolder") != null;
+            return key?.GetValue("DesktopFolder") != null;
         }
         catch { return false; }
     }

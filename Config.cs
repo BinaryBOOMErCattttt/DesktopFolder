@@ -1,7 +1,7 @@
-using System.IO;
+﻿using System.IO;
 using System.Text.Json;
 
-namespace HyperOSFolder;
+namespace DesktopFolder;
 
 internal sealed class WidgetSettings
 {

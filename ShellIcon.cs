@@ -1,9 +1,9 @@
-using System.Collections.Concurrent;
+﻿using System.Collections.Concurrent;
 using System.Runtime.InteropServices;
 using System.Windows.Interop;
 using System.Windows.Media.Imaging;
 
-namespace HyperOSFolder;
+namespace DesktopFolder;
 
 internal static class ShellIcon
 {
@@ -113,9 +113,8 @@ internal static class ShellIcon
         catch { return null; }
     }
 
-    // ---- 背景特效:逐像素透明 + 毛玻璃 (SetWindowCompositionAttribute) ----
-    // 失效时仅保留纯透明,绝不会出现黑边。
-
+    // ---- 鑳屾櫙鐗规晥:閫愬儚绱犻€忔槑 + 姣涚幓鐠?(SetWindowCompositionAttribute) ----
+    // 澶辨晥鏃朵粎淇濈暀绾€忔槑,缁濅笉浼氬嚭鐜伴粦杈广€?
     [DllImport("user32.dll")]
     private static extern int SetWindowCompositionAttribute(IntPtr hwnd, ref WindowCompositionAttribData data);
 
@@ -226,7 +225,7 @@ internal static class ShellIcon
         return pid == Environment.ProcessId;
     }
 
-    // ---- 挂靠到桌面层(WorkerW):只存在于桌面,普通窗口永远盖在上面 ----
+    // ---- 鎸傞潬鍒版闈㈠眰(WorkerW):鍙瓨鍦ㄤ簬妗岄潰,鏅€氱獥鍙ｆ案杩滅洊鍦ㄤ笂闈?----
 
     private delegate bool EnumWindowsProc(IntPtr hWnd, IntPtr lParam);
 
